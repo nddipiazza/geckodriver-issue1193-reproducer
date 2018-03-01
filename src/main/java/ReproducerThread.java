@@ -107,7 +107,7 @@ public class ReproducerThread {
         .usingDriverExecutable(new File("geckodriver"))
         .build();
     driverService.start();
-    id = "_" + driverService.getUrl().toString();
+    id += "_" + driverService.getUrl().toString();
     DesiredCapabilities capabilities = DesiredCapabilities.firefox();
     FirefoxOptions options = new FirefoxOptions();
     if (firefoxExe != null) {
