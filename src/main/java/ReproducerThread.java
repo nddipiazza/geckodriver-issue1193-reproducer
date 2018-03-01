@@ -1,6 +1,7 @@
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.GeckoDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -117,7 +118,8 @@ public class ReproducerThread {
     options.addArguments("--headless");
     options.setLogLevel(Level.FINEST);
     capabilities.setCapability(FirefoxOptions.FIREFOX_OPTIONS, options);
-    RemoteWebDriver driver = new RemoteWebDriver(capabilities);
+    //RemoteWebDriver driver = new RemoteWebDriver(driverService.getUrl(), capabilities);
+    WebDriver driver = new FirefoxDriver(capabilities);
     driver.manage().timeouts().implicitlyWait(20000L, TimeUnit.MILLISECONDS);
     driver.manage().timeouts().pageLoadTimeout(20000L, TimeUnit.MILLISECONDS);
     driver.manage().timeouts().setScriptTimeout(20000L, TimeUnit.MILLISECONDS);
