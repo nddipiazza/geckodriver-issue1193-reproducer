@@ -149,7 +149,7 @@ public class Reproducer {
     options.addArguments("--headless");
     options.setLogLevel(Level.OFF);
     capabilities.setCapability(FirefoxOptions.FIREFOX_OPTIONS, options);
-    WebDriver driver = new FirefoxDriver();
+    WebDriver driver = new FirefoxDriver(capabilities);
 
     driver.manage().timeouts().implicitlyWait(5000L, TimeUnit.MILLISECONDS);
     driver.manage().timeouts().pageLoadTimeout(10000L, TimeUnit.MILLISECONDS);
