@@ -24,17 +24,16 @@ public class Reproducer {
       firefoxExe = args[0];
     }
     List<Thread> ts = new ArrayList<>();
-    //for (int i=0; i<5; ++i) {
-      ts.add(
-          new Thread(() -> {
-            try {
-              ReproducerThread rt = new ReproducerThread("repro1", firefoxExe);
-              rt.loadUrls(1);
-            } catch (IOException e) {
-              e.printStackTrace();
-            }
-          })
-      );
+    ts.add(
+        new Thread(() -> {
+          try {
+            ReproducerThread rt = new ReproducerThread("repro1", firefoxExe);
+            rt.loadUrls(1);
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        })
+    );
     ts.add(
         new Thread(() -> {
           try {
@@ -45,7 +44,6 @@ public class Reproducer {
           }
         })
     );
-    //}
     while (true) {
       for (Thread t : ts) {
         t.start();
@@ -55,6 +53,4 @@ public class Reproducer {
       }
     }
   }
-
-
 }

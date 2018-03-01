@@ -131,6 +131,9 @@ public class ReproducerThread {
         waitForPageToBeReady(driver);
       } catch (TimeoutException e) {
         System.out.println("Reproducer[" + id + "]: Time exceeded waiting for page to load. Moving on");
+      } catch (Exception e) {
+        e.printStackTrace();
+        System.exit(1);
       }
       System.out.println("Reproducer[" + id + "]: done loading a page " + nextLine);
     }
