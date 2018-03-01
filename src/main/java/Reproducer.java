@@ -33,15 +33,15 @@ public class Reproducer {
             }
           })
       );
-    ts.add(
-        new Thread(() -> {
-          try {
-            loadUrls(2);
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
-        })
-    );
+//    ts.add(
+//        new Thread(() -> {
+//          try {
+//            loadUrls(2);
+//          } catch (IOException e) {
+//            e.printStackTrace();
+//          }
+//        })
+//    );
     //}
     while (true) {
       for (Thread t : ts) {
