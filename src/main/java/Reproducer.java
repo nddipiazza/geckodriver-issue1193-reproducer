@@ -1,17 +1,16 @@
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.firefox.GeckoDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.remote.service.DriverService;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.FileSystems;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -60,7 +59,7 @@ public class Reproducer {
    * Then attempt to wait for all pending ajax requests to finish.
    */
   public static void waitForPageToBeReady(WebDriver driver) {
-    new WebDriverWait(driver, 20000L).until(wd -> ((JavascriptExecutor) wd).executeScript(
+    new WebDriverWait(driver, 10000L).until(wd -> ((JavascriptExecutor) wd).executeScript(
         "return document.readyState").equals("complete"));
     int secondsToWait = 20;
     try {
@@ -134,10 +133,14 @@ public class Reproducer {
   }
 
   private static void loadUrls(int idx) throws IOException {
-    DriverService driverService = new GeckoDriverService.Builder()
-        .usingDriverExecutable(new File("geckodriver"))
-        .build();
-    driverService.start();
+    String geckoDriver = FileSystems.getDefault().getPath("geckodriver").toAbsolutePath().toString();
+    System.setProperty("webdriver.gecko.driver", geckoDriver);
+
+
+//    DriverService driverService = new GeckoDriverService.Builder()
+//        .usingDriverExecutable(new File("geckodriver"))
+//        .build();
+//    driverService.start();
     DesiredCapabilities capabilities = DesiredCapabilities.firefox();
     FirefoxOptions options = new FirefoxOptions();
     if (firefoxExe != null) {
@@ -146,9 +149,10 @@ public class Reproducer {
     options.addArguments("--headless");
     options.setLogLevel(Level.OFF);
     capabilities.setCapability(FirefoxOptions.FIREFOX_OPTIONS, options);
-    RemoteWebDriver driver = new RemoteWebDriver(driverService.getUrl(), capabilities);
-    driver.manage().timeouts().implicitlyWait(20000L, TimeUnit.MILLISECONDS);
-    driver.manage().timeouts().pageLoadTimeout(20000L, TimeUnit.MILLISECONDS);
+    WebDriver driver = new FirefoxDriver();
+
+    driver.manage().timeouts().implicitlyWait(5000L, TimeUnit.MILLISECONDS);
+    driver.manage().timeouts().pageLoadTimeout(10000L, TimeUnit.MILLISECONDS);
     driver.manage().timeouts().setScriptTimeout(20000L, TimeUnit.MILLISECONDS);
     BufferedReader br = new BufferedReader(new FileReader(new File("urls" + idx + ".txt")));
     String nextLine;
