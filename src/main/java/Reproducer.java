@@ -144,7 +144,7 @@ public class Reproducer {
       options.setBinary(firefoxExe);
     }
     options.addArguments("--headless");
-    options.setLogLevel(Level.OFF);
+    options.setLogLevel(Level.FINEST);
     capabilities.setCapability(FirefoxOptions.FIREFOX_OPTIONS, options);
     RemoteWebDriver driver = new RemoteWebDriver(driverService.getUrl(), capabilities);
     driver.manage().timeouts().implicitlyWait(20000L, TimeUnit.MILLISECONDS);
