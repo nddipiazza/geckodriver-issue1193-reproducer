@@ -143,6 +143,7 @@ public class Reproducer {
     options.addArguments("--headless");
     options.addArguments("--disable-gpu");
     options.addArguments("--no-sandbox");
+    options.addArguments("--mute-audio");
     capabilities.setCapability(ChromeOptions.CAPABILITY, options);
     WebDriver driver = new ChromeDriver(capabilities);
 
