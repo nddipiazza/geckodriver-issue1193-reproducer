@@ -1,8 +1,8 @@
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -14,13 +14,12 @@ import java.nio.file.FileSystems;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
 
 public class Reproducer {
-  static String firefoxExe = null;
+  static String chromeExe = null;
   public static void main(String[] args) throws Exception {
     if (args.length > 0) {
-      firefoxExe = args[0];
+      chromeExe = args[0];
     }
     List<Thread> ts = new ArrayList<>();
     //for (int i=0; i<5; ++i) {
@@ -133,23 +132,19 @@ public class Reproducer {
   }
 
   private static void loadUrls(int idx) throws IOException {
-    String geckoDriver = FileSystems.getDefault().getPath("geckodriver").toAbsolutePath().toString();
-    System.setProperty("webdriver.gecko.driver", geckoDriver);
+    String chromedriver = FileSystems.getDefault().getPath("chromedriver").toAbsolutePath().toString();
+    System.setProperty("webdriver.chrome.driver", chromedriver);
 
-
-//    DriverService driverService = new GeckoDriverService.Builder()
-//        .usingDriverExecutable(new File("geckodriver"))
-//        .build();
-//    driverService.start();
-    DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-    FirefoxOptions options = new FirefoxOptions();
-    if (firefoxExe != null) {
-      options.setBinary(firefoxExe);
+    DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+    ChromeOptions options = new ChromeOptions();
+    if (chromeExe != null) {
+      options.setBinary(chromeExe);
     }
     options.addArguments("--headless");
-    options.setLogLevel(Level.FINEST);
-    capabilities.setCapability(FirefoxOptions.FIREFOX_OPTIONS, options);
-    WebDriver driver = new FirefoxDriver(capabilities);
+    options.addArguments("--disable-gpu");
+    options.addArguments("--no-sandbox");
+    capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+    WebDriver driver = new ChromeDriver(capabilities);
 
     driver.manage().timeouts().implicitlyWait(5000L, TimeUnit.MILLISECONDS);
     driver.manage().timeouts().pageLoadTimeout(20000L, TimeUnit.MILLISECONDS);
