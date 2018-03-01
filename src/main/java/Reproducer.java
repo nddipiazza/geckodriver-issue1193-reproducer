@@ -147,7 +147,7 @@ public class Reproducer {
       options.setBinary(firefoxExe);
     }
     options.addArguments("--headless");
-    options.setLogLevel(Level.OFF);
+    options.setLogLevel(Level.FINEST);
     capabilities.setCapability(FirefoxOptions.FIREFOX_OPTIONS, options);
     WebDriver driver = new FirefoxDriver(capabilities);
 
