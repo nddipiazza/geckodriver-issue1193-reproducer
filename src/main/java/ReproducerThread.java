@@ -103,11 +103,12 @@ public class ReproducerThread {
   }
 
   public void loadUrls(int idx) throws IOException {
-    DriverService driverService = new GeckoDriverService.Builder()
-        .usingDriverExecutable(new File("geckodriver"))
-        .build();
-    driverService.start();
-    id += "_" + driverService.getUrl().toString();
+//    DriverService driverService = new GeckoDriverService.Builder()
+//        .usingDriverExecutable(new File("geckodriver"))
+//        .build();
+//    driverService.start();
+//    id += "_" + driverService.getUrl().toString();
+    System.setProperty("webdriver.gecko.driver", new File("geckodriver").getAbsolutePath());
     DesiredCapabilities capabilities = DesiredCapabilities.firefox();
     FirefoxOptions options = new FirefoxOptions();
     if (firefoxExe != null) {
@@ -116,7 +117,7 @@ public class ReproducerThread {
     options.addArguments("--headless");
     options.setLogLevel(Level.FINEST);
     capabilities.setCapability(FirefoxOptions.FIREFOX_OPTIONS, options);
-    RemoteWebDriver driver = new RemoteWebDriver(driverService.getUrl(), capabilities);
+    RemoteWebDriver driver = new RemoteWebDriver(capabilities);
     driver.manage().timeouts().implicitlyWait(20000L, TimeUnit.MILLISECONDS);
     driver.manage().timeouts().pageLoadTimeout(20000L, TimeUnit.MILLISECONDS);
     driver.manage().timeouts().setScriptTimeout(20000L, TimeUnit.MILLISECONDS);
