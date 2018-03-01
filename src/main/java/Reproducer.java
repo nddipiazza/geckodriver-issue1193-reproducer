@@ -152,8 +152,8 @@ public class Reproducer {
     WebDriver driver = new FirefoxDriver(capabilities);
 
     driver.manage().timeouts().implicitlyWait(5000L, TimeUnit.MILLISECONDS);
-    driver.manage().timeouts().pageLoadTimeout(10000L, TimeUnit.MILLISECONDS);
-    driver.manage().timeouts().setScriptTimeout(20000L, TimeUnit.MILLISECONDS);
+    driver.manage().timeouts().pageLoadTimeout(20000L, TimeUnit.MILLISECONDS);
+    driver.manage().timeouts().setScriptTimeout(10000L, TimeUnit.MILLISECONDS);
     BufferedReader br = new BufferedReader(new FileReader(new File("urls" + idx + ".txt")));
     String nextLine;
     while ((nextLine = br.readLine()) != null) {
