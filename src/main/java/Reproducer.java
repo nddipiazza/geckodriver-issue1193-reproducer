@@ -32,15 +32,15 @@ public class Reproducer {
             }
           })
       );
-//    ts.add(
-//        new Thread(() -> {
-//          try {
-//            loadUrls(2);
-//          } catch (IOException e) {
-//            e.printStackTrace();
-//          }
-//        })
-//    );
+    ts.add(
+        new Thread(() -> {
+          try {
+            loadUrls(2);
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        })
+    );
     //}
     while (true) {
       for (Thread t : ts) {
@@ -158,7 +158,7 @@ public class Reproducer {
       } catch (TimeoutException e) {
         System.out.println("Time exceeded waiting for page to load. Moving on");
       }
-      System.out.println(Thread.currentThread().getId() + " done loading a page " + nextLine);
+      System.out.println(driver.getPageSource());
     }
   }
 }
